@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Halfplate</title>
+<meta name="description" content="Find restaurants with small, high-protein, fairly priced meals for GLP-1 users.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <section class="pitch">
+    <div class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="15" fill="none" stroke="var(--ink)" stroke-width="2.5"/><path d="M17 2a15 15 0 0 1 0 30z" fill="var(--amber)"/><circle cx="17" cy="17" r="5" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/></svg>
+      Halfplate
+    </div>
+    <div class="tag">Investor prototype · v0.2</div>
+    <h1>Find restaurants that fit a <em>GLP-1 appetite.</em></h1>
+    <p class="lede">People on Ozempic, Wegovy and Mounjaro still eat out, but they want half the food, more protein, and a price that matches the smaller plate. Halfplate shows which restaurants offer exactly that, rated by the people who eat there.</p>
+
+    <div class="stats" aria-label="Market data">
+      <div class="stat"><b>1 in 8</b><span>US adults currently take a GLP-1 medication</span></div>
+      <div class="stat"><b>49%</b><span>of users now order smaller portions when eating out</span></div>
+      <div class="stat"><b>86%</b><span>want restaurants to offer more portion sizes</span></div>
+      <div class="stat"><b>43%</b><span>order more high-protein items than before</span></div>
+    </div>
+    <p class="src">Source: National Restaurant Association, <a href="https://www.restaurant.org/NRA/media/Research/Indicators/2026/GLP-1-Usage-and-Restaurants-May-2026.pdf">GLP-1 Usage and Restaurants</a>, May 2026 (US survey).</p>
+
+    <div class="gap">
+      <h2>The gap</h2>
+      <p>Menus aren't built for small appetites. A diner who can only manage half a main still pays full price, takes home a box they won't finish, or guesses which venue will let them order the entrée as a meal. That knowledge lives in forum threads, not in any app.</p>
+    </div>
+
+    <ul class="feats">
+      <li><h3>Small Plate rating</h3><p>Community scores for portion options, nutrition, value and how staff handle a "smaller please" request.</p></li>
+      <li><h3>Price that fits the plate</h3><p>Every small meal shows its price, what you'd save against the full serve, and a "Fair half-price" badge.</p></li>
+      <li><h3>Protein-first ranking</h3><p>Results match your protein target, appetite size and budget per meal, not just distance.</p></li>
+      <li><h3>Just what to ask for</h3><p>Diner-sourced tips like "kids' steak is fine for adults" or "entrée can be plated as a main".</p></li>
+    </ul>
+
+    <div class="model">
+      <h2>How it makes money</h2>
+      <div>
+        <div class="mrow"><b>Venues</b><span>Monthly listing for a verified Small Plate menu, a badge, and placement in Specials.</span></div>
+        <div class="mrow"><b>Diners</b><span>Free to search. Premium adds meal logging against protein goals and saved budgets.</span></div>
+        <div class="mrow"><b>Partners</b><span>Referral partnerships with GLP-1 clinics and telehealth providers.</span></div>
+      </div>
+      <p class="note">In the prototype, all venues, dishes, prices and ratings are fictional sample data.</p>
+    </div>
+  </section>
+
+  <div class="phone">
+    <div class="status"><span>9:41</span><span>Melbourne</span></div>
+    <div class="screen" id="screen"></div>
+    <div class="sheet" id="sheet" aria-hidden="true"></div>
+    <nav class="tabs" role="tablist">
+      <button role="tab" data-tab="explore" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Explore</button>
+      <button role="tab" data-tab="specials" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>Specials</button>
+      <button role="tab" data-tab="saved" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg>Saved</button>
+      <button role="tab" data-tab="me" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>Me</button>
+    </nav>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
