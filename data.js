@@ -1,63 +1,152 @@
-// Sample data: fictional venues for the prototype.
-// Replace with real listings (same shape) when you have them.
-/* Venue fields: meals[] = d (dish), price, full (full-serve price or null), g (portion grams), p (protein g), k (kcal), gentle, diet[] ('gf','veg','df') */
-const V=[
- {id:"kombu",name:"Kombu Lane",sub:"Carlton",km:1.4,cuisine:"Japanese",open:true,hue:"#3D6E7A",x:30,y:22,partner:true,
-  r:{portion:4.8,nutrition:4.7,value:4.3,staff:4.9},n:184,f:{half:true,lunch:true,kids:false,fair:true,box:true},diet:["gf","df"],
-  meals:[{d:"Sashimi & rice, entrée size",price:16,full:28,g:240,p:32,k:390,gentle:true,diet:["gf","df"]},
-         {d:"Chawanmushi with prawn",price:9,full:null,g:180,p:17,k:160,gentle:true,diet:["gf"]},
-         {d:"Chicken teriyaki half bento",price:14,full:24,g:280,p:30,k:450,gentle:false,diet:["df"]}],
-  tip:"Every main comes as an entrée size on request. Say \"half bento\" and it's rung up at the half price.",
-  notes:[["Happy to do half serves",62],["Fair price for the smaller size",41],["Gentle food, not greasy",28]]},
- {id:"quince",name:"Little Quince",sub:"Brunswick",km:3.1,cuisine:"Middle Eastern",open:true,hue:"#B05A4B",x:38,y:8,partner:true,
-  r:{portion:4.9,nutrition:4.5,value:4.8,staff:4.6},n:131,f:{half:true,lunch:true,kids:true,fair:true,box:true},diet:["gf","veg"],
-  meals:[{d:"Lamb kofta mezze for one",price:15,full:27,g:250,p:31,k:440,gentle:false,diet:["gf"]},
-         {d:"Lentil & lemon soup, cup",price:8,full:13,g:250,p:14,k:210,gentle:true,diet:["gf","veg","df"]},
-         {d:"Chicken shish, half skewer plate",price:13,full:24,g:220,p:33,k:360,gentle:true,diet:["gf"]}],
-  tip:"The mezze-for-one is the smallest full meal on the menu. Soup cups are a good pick on queasy days.",
-  notes:[["Small meals are a real menu section",48],["Fair price for the smaller size",39],["Staff didn't make it awkward",22]]},
- {id:"pebble",name:"Pebble Bakehouse",sub:"Fitzroy",km:0.8,cuisine:"Café",open:true,hue:"#C98B4A",x:44,y:30,partner:false,
-  r:{portion:4.4,nutrition:4.2,value:4.6,staff:4.5},n:212,f:{half:true,lunch:false,kids:true,fair:true,box:false},diet:["veg","gf"],
-  meals:[{d:"Eggs & smoked trout half stack",price:13,full:22,g:220,p:28,k:360,gentle:true,diet:[]},
-         {d:"Greek yoghurt, berries & seeds",price:9,full:null,g:220,p:20,k:270,gentle:true,diet:["gf","veg"]}],
-  tip:"Half stacks aren't on the menu, but staff do them at about 60% of the price. Just ask.",
-  notes:[["Half serves on request",74],["Good protein options",51]]},
- {id:"brightwater",name:"Brightwater Bowls",sub:"South Yarra",km:3.4,cuisine:"Bowls",open:true,hue:"#3E8A72",x:56,y:76,partner:true,
-  r:{portion:4.6,nutrition:4.8,value:4.0,staff:4.4},n:97,f:{half:false,lunch:true,kids:false,fair:true,box:true},diet:["gf","veg","df"],
-  meals:[{d:"Mini poke bowl, salmon",price:14,full:21,g:280,p:27,k:380,gentle:true,diet:["gf","df"]},
-         {d:"Mini tofu & edamame bowl",price:12,full:19,g:270,p:24,k:340,gentle:true,diet:["gf","veg","df"]}],
-  tip:"Mini bowls are listed on the board. Ask for double protein (+$3) to hit 35 g+.",
-  notes:[["Clear protein info on menu",44],["Mini size is properly priced",30]]},
- {id:"verdigris",name:"Verdigris Taqueria",sub:"Collingwood",km:1.9,cuisine:"Mexican",open:true,hue:"#5E8C3A",x:62,y:36,partner:false,
-  r:{portion:4.7,nutrition:3.9,value:4.9,staff:4.3},n:88,f:{half:true,lunch:false,kids:false,fair:true,box:true},diet:["gf"],
-  meals:[{d:"Two chicken tacos",price:11,full:15,g:220,p:26,k:410,gentle:false,diet:["gf","df"]},
-         {d:"Black bean & egg tostada, single",price:7,full:null,g:160,p:15,k:260,gentle:true,diet:["gf","veg"]}],
-  tip:"Tacos are priced individually, so order two instead of the plate of three.",
-  notes:[["Cheapest small meal nearby",57],["Easy to order less",33]]},
- {id:"hollow",name:"Hollow Oak Grill",sub:"Richmond",km:2.6,cuisine:"Grill",open:false,hue:"#7A4E38",x:70,y:60,partner:false,
-  r:{portion:3.6,nutrition:4.4,value:3.4,staff:4.1},n:52,f:{half:false,lunch:true,kids:true,fair:false,box:true},diet:["gf"],
-  meals:[{d:"Kids' eye fillet with greens",price:19,full:42,g:200,p:38,k:360,gentle:true,diet:["gf"]},
-         {d:"Lunch chicken breast, side salad",price:22,full:34,g:260,p:42,k:420,gentle:true,diet:["gf","df"]}],
-  tip:"Adults can order the 150 g kids' steak. Lunch sizes run until 3 pm.",
-  notes:[["Kids' menu OK for adults",29],["Pricey, but high protein",18]]},
- {id:"tamarind",name:"Tamarind Room",sub:"Melbourne CBD",km:1.1,cuisine:"Thai",open:true,hue:"#C2622D",x:22,y:46,partner:false,
-  r:{portion:3.2,nutrition:3.8,value:3.5,staff:3.9},n:41,f:{half:false,lunch:true,kids:false,fair:false,box:true},diet:["gf","df"],
-  meals:[{d:"Lunch-size larb gai",price:15,full:24,g:240,p:27,k:330,gentle:false,diet:["gf","df"]}],
-  tip:"Only the lunch menu has smaller sizes. Dinner portions are large, so ask for a box up front.",
-  notes:[["Lunch sizes only",21],["Boxes offered without asking",14]]},
- {id:"fennel",name:"Fennel & Fig",sub:"St Kilda",km:4.8,cuisine:"Modern Australian",open:true,hue:"#6B5B8E",x:34,y:86,partner:true,
-  r:{portion:4.7,nutrition:4.6,value:3.8,staff:4.8},n:118,f:{half:true,lunch:true,kids:false,fair:false,box:true},diet:["gf","veg"],
-  meals:[{d:"Barramundi entrée as a main",price:24,full:38,g:200,p:31,k:320,gentle:true,diet:["gf","df"]},
-         {d:"Burrata & roast pumpkin, small",price:18,full:26,g:180,p:14,k:340,gentle:true,diet:["gf","veg"]}],
-  tip:"Any entrée can be plated as a main with a side. They also have a printed GLP-1 menu.",
-  notes:[["Has a dedicated small-plate menu",46],["Staff very understanding",40]]}
+// Halfplate sample data.
+// Every venue below is FICTIONAL. Coordinates sit in real Melbourne suburbs so the map looks right.
+// Replace this array with real listings (same fields) once you have them.
+//
+// Venue fields
+//   id, name, suburb, street, lat, lng, cuisine, price (1-3), hours, verified (bool)
+//   rating: { portion, value, nutrition, staff }   each out of 5
+//   ratingCount: number of diner ratings
+//   features: { half, lunch, entree, kids, fair, box }   booleans
+//   diet: ["gf","veg","df"] options available
+//   tip: what to ask for when ordering
+//   meals: [{ name, note, price, full (full-serve price or null), protein (g), size (g), cal }]
+//   reports: [[ "what diners say", count ]]
+
+const SUBURBS = ["Fitzroy","Collingwood","Carlton","Brunswick","Richmond","South Yarra","Melbourne CBD","St Kilda"];
+
+const VENUES = [
+ {id:"kombu-lane",name:"Kombu Lane",suburb:"Carlton",street:"Lygon St",lat:-37.7985,lng:144.9668,cuisine:"Japanese",price:2,hours:"11:30am – 9pm",verified:true,
+  rating:{portion:4.8,value:4.3,nutrition:4.7,staff:4.9},ratingCount:184,
+  features:{half:true,lunch:true,entree:true,kids:false,fair:true,box:true},diet:["gf","df"],
+  tip:"Every main can be ordered entrée-size. Ask for a \"half bento\" and it's charged at the half price.",
+  meals:[{name:"Sashimi & rice",note:"Entrée size",price:16,full:28,protein:32,size:240,cal:390},
+         {name:"Chicken teriyaki half bento",note:"Half serve",price:14,full:24,protein:30,size:280,cal:450},
+         {name:"Chawanmushi with prawn",note:"Small dish",price:9,full:null,protein:17,size:180,cal:160}],
+  reports:[["Happy to do half serves",62],["Fair price for the smaller size",41],["Light food, not greasy",28]]},
+ {id:"little-quince",name:"Little Quince",suburb:"Brunswick",street:"Sydney Rd",lat:-37.7680,lng:144.9612,cuisine:"Middle Eastern",price:2,hours:"12pm – 10pm",verified:true,
+  rating:{portion:4.9,value:4.8,nutrition:4.5,staff:4.6},ratingCount:131,
+  features:{half:true,lunch:true,entree:true,kids:true,fair:true,box:true},diet:["gf","veg"],
+  tip:"The mezze-for-one is the smallest complete meal. Soup comes in a cup size that's good on low-appetite days.",
+  meals:[{name:"Chicken shish plate",note:"Half skewer",price:13,full:24,protein:33,size:220,cal:360},
+         {name:"Lamb kofta mezze for one",note:"Mezze size",price:15,full:27,protein:31,size:250,cal:440},
+         {name:"Lentil & lemon soup",note:"Cup",price:8,full:13,protein:14,size:250,cal:210}],
+  reports:[["Small meals are a real menu section",48],["Fair price for the smaller size",39],["Staff didn't make it awkward",22]]},
+ {id:"pebble-bakehouse",name:"Pebble Bakehouse",suburb:"Fitzroy",street:"Brunswick St",lat:-37.7990,lng:144.9783,cuisine:"Café",price:1,hours:"7am – 3pm",verified:false,
+  rating:{portion:4.4,value:4.6,nutrition:4.2,staff:4.5},ratingCount:212,
+  features:{half:true,lunch:false,entree:false,kids:true,fair:true,box:false},diet:["veg","gf"],
+  tip:"Half stacks aren't on the menu, but they'll do them for about 60% of the price if you ask.",
+  meals:[{name:"Eggs & smoked trout",note:"Half stack",price:13,full:22,protein:28,size:220,cal:360},
+         {name:"Greek yoghurt, berries & seeds",note:"Small bowl",price:9,full:null,protein:20,size:220,cal:270}],
+  reports:[["Half serves on request",74],["Good protein options",51]]},
+ {id:"verdigris-taqueria",name:"Verdigris Taqueria",suburb:"Collingwood",street:"Smith St",lat:-37.8012,lng:144.9837,cuisine:"Mexican",price:1,hours:"12pm – 10pm",verified:false,
+  rating:{portion:4.7,value:4.9,nutrition:3.9,staff:4.3},ratingCount:88,
+  features:{half:true,lunch:false,entree:false,kids:false,fair:true,box:true},diet:["gf"],
+  tip:"Tacos are priced one at a time, so order two instead of the plate of three.",
+  meals:[{name:"Two chicken tacos",note:"Order by the taco",price:11,full:15,protein:26,size:220,cal:410},
+         {name:"Black bean & egg tostada",note:"Single",price:7,full:null,protein:15,size:160,cal:260}],
+  reports:[["Cheapest small meal nearby",57],["Easy to order less",33]]},
+ {id:"brightwater-bowls",name:"Brightwater Bowls",suburb:"South Yarra",street:"Chapel St",lat:-37.8395,lng:144.9935,cuisine:"Bowls & salads",price:2,hours:"10am – 8pm",verified:true,
+  rating:{portion:4.6,value:4.0,nutrition:4.8,staff:4.4},ratingCount:97,
+  features:{half:false,lunch:true,entree:false,kids:false,fair:true,box:true},diet:["gf","veg","df"],
+  tip:"Mini bowls are on the board. Add double protein for $3 to get past 35 g.",
+  meals:[{name:"Salmon poke",note:"Mini bowl",price:14,full:21,protein:27,size:280,cal:380},
+         {name:"Tofu & edamame",note:"Mini bowl",price:12,full:19,protein:24,size:270,cal:340}],
+  reports:[["Protein listed on the menu",44],["Mini size is properly priced",30]]},
+ {id:"hollow-oak-grill",name:"Hollow Oak Grill",suburb:"Richmond",street:"Swan St",lat:-37.8253,lng:144.9978,cuisine:"Steak & grill",price:3,hours:"12pm – 3pm, 5:30pm – 10pm",verified:false,
+  rating:{portion:3.6,value:3.4,nutrition:4.4,staff:4.1},ratingCount:52,
+  features:{half:false,lunch:true,entree:true,kids:true,fair:false,box:true},diet:["gf"],
+  tip:"Adults can order the 150 g kids' steak. Lunch sizes run until 3pm.",
+  meals:[{name:"Eye fillet with greens",note:"Kids' size, 150 g",price:19,full:42,protein:38,size:200,cal:360},
+         {name:"Chicken breast & side salad",note:"Lunch size",price:22,full:34,protein:42,size:260,cal:420}],
+  reports:[["Kids' menu OK for adults",29],["Pricey, but high protein",18]]},
+ {id:"tamarind-room",name:"Tamarind Room",suburb:"Melbourne CBD",street:"Little Bourke St",lat:-37.8118,lng:144.9662,cuisine:"Thai",price:2,hours:"11am – 9:30pm",verified:false,
+  rating:{portion:3.4,value:3.6,nutrition:3.8,staff:3.9},ratingCount:41,
+  features:{half:false,lunch:true,entree:true,kids:false,fair:false,box:true},diet:["gf","df"],
+  tip:"Smaller sizes are on the lunch menu only. Dinner serves are large, so ask for a box when you order.",
+  meals:[{name:"Larb gai",note:"Lunch size",price:15,full:24,protein:27,size:240,cal:330},
+         {name:"Chicken satay skewers",note:"Entrée, 3 sticks",price:12,full:null,protein:21,size:150,cal:290}],
+  reports:[["Lunch sizes only",21],["Offers a box without asking",14]]},
+ {id:"fennel-and-fig",name:"Fennel & Fig",suburb:"St Kilda",street:"Acland St",lat:-37.8678,lng:144.9802,cuisine:"Modern Australian",price:3,hours:"5:30pm – 10pm",verified:true,
+  rating:{portion:4.7,value:3.8,nutrition:4.6,staff:4.8},ratingCount:118,
+  features:{half:true,lunch:false,entree:true,kids:false,fair:false,box:true},diet:["gf","veg"],
+  tip:"Any entrée can be plated as a main with a side. There's also a printed small-plates menu if you ask.",
+  meals:[{name:"Barramundi with herb salsa",note:"Entrée as a main",price:24,full:38,protein:31,size:200,cal:320},
+         {name:"Burrata & roast pumpkin",note:"Small",price:18,full:26,protein:14,size:180,cal:340}],
+  reports:[["Has a small-plates menu",46],["Staff very understanding",40]]},
+ {id:"saffron-and-salt",name:"Saffron & Salt",suburb:"Fitzroy",street:"Gertrude St",lat:-37.8058,lng:144.9802,cuisine:"Indian",price:1,hours:"5pm – 10pm",verified:false,
+  rating:{portion:4.5,value:4.7,nutrition:4.0,staff:4.2},ratingCount:76,
+  features:{half:true,lunch:false,entree:false,kids:false,fair:true,box:true},diet:["gf","veg"],
+  tip:"Every curry comes in a half size. Pair it with a small rice rather than naan.",
+  meals:[{name:"Tandoori chicken",note:"Half, 4 pieces",price:12,full:21,protein:34,size:200,cal:330},
+         {name:"Dal & small rice",note:"Half curry",price:10,full:17,protein:16,size:280,cal:380}],
+  reports:[["Half and full sizes on menu",39],["Great value",27]]},
+ {id:"marrow-and-moss",name:"Marrow & Moss",suburb:"Collingwood",street:"Johnston St",lat:-37.7990,lng:144.9905,cuisine:"Café",price:2,hours:"7:30am – 3pm",verified:true,
+  rating:{portion:4.6,value:4.2,nutrition:4.7,staff:4.7},ratingCount:63,
+  features:{half:true,lunch:true,entree:false,kids:false,fair:true,box:false},diet:["veg","df"],
+  tip:"There's a \"lighter\" column on the menu, about two-thirds of the usual serve.",
+  meals:[{name:"Chicken, quinoa & greens",note:"Lighter serve",price:14,full:22,protein:29,size:240,cal:360},
+         {name:"Scrambled tofu on rye",note:"One slice",price:12,full:19,protein:22,size:200,cal:320}],
+  reports:[["Lighter serves on the menu",31],["Protein listed",17]]},
+ {id:"tiller-and-pine",name:"Tiller & Pine",suburb:"Richmond",street:"Bridge Rd",lat:-37.8190,lng:144.9965,cuisine:"Vietnamese",price:1,hours:"11am – 9pm",verified:false,
+  rating:{portion:4.3,value:4.8,nutrition:4.3,staff:4.0},ratingCount:104,
+  features:{half:false,lunch:false,entree:true,kids:true,fair:true,box:true},diet:["gf","df"],
+  tip:"Order the small pho. It's about 60% of the large and still has plenty of meat.",
+  meals:[{name:"Chicken pho",note:"Small bowl",price:13,full:17,protein:28,size:450,cal:380},
+         {name:"Rice paper rolls, prawn",note:"Entrée, 2 rolls",price:9,full:null,protein:14,size:160,cal:190}],
+  reports:[["Small bowls available",44],["Cheap and filling",30]]},
+ {id:"oro-pasta-bar",name:"Oro Pasta Bar",suburb:"Carlton",street:"Rathdowne St",lat:-37.7962,lng:144.9715,cuisine:"Italian",price:2,hours:"12pm – 10pm",verified:false,
+  rating:{portion:4.4,value:4.1,nutrition:3.6,staff:4.6},ratingCount:91,
+  features:{half:false,lunch:false,entree:true,kids:true,fair:false,box:true},diet:["veg","gf"],
+  tip:"All pastas come entrée-size. Add the grilled chicken side to bring the protein up.",
+  meals:[{name:"Chicken & broccolini orecchiette",note:"Entrée size",price:19,full:29,protein:26,size:230,cal:480},
+         {name:"Veal scallopini",note:"Kids' size",price:16,full:34,protein:30,size:180,cal:370}],
+  reports:[["Entrée pasta sizes",37],["Kids' menu OK for adults",12]]},
+ {id:"kettle-and-crane",name:"Kettle & Crane",suburb:"Melbourne CBD",street:"Flinders Ln",lat:-37.8160,lng:144.9668,cuisine:"Chinese",price:2,hours:"11am – 10pm",verified:true,
+  rating:{portion:4.8,value:4.5,nutrition:4.2,staff:4.4},ratingCount:146,
+  features:{half:true,lunch:true,entree:true,kids:false,fair:true,box:true},diet:["df"],
+  tip:"Dumplings come in fours, so you can build a small meal. Steamed is easier on the stomach than fried.",
+  meals:[{name:"Steamed prawn dumplings",note:"4 pieces",price:11,full:null,protein:18,size:160,cal:230},
+         {name:"Soy chicken & rice",note:"Half plate",price:13,full:21,protein:32,size:260,cal:420}],
+  reports:[["Easy to order a small meal",52],["Half plates at half price",34]]},
+ {id:"seawall-kitchen",name:"Seawall Kitchen",suburb:"St Kilda",street:"Fitzroy St",lat:-37.8605,lng:144.9790,cuisine:"Seafood",price:2,hours:"11:30am – 9pm",verified:false,
+  rating:{portion:4.2,value:3.9,nutrition:4.6,staff:4.3},ratingCount:58,
+  features:{half:false,lunch:true,entree:true,kids:true,fair:false,box:true},diet:["gf","df"],
+  tip:"Ask for the grilled fish instead of battered. The kids' fish plate is a good adult small meal.",
+  meals:[{name:"Grilled flathead & salad",note:"Kids' plate",price:14,full:29,protein:28,size:200,cal:300},
+         {name:"Prawn & avocado cup",note:"Entrée",price:16,full:null,protein:22,size:180,cal:260}],
+  reports:[["Grilled option on request",23],["Kids' menu OK for adults",15]]}
 ];
-const FILTERS=[["half","Half serves"],["cheap","Under $15"],["protein","25 g+ protein"],["fair","Fair half-price"],["gentle","Gentle on stomach"],["kids","Kids' menu OK"],["open","Open now"],["gf","Gluten-free",1],["veg","Vegetarian",1],["df","Dairy-free",1]];
-const SORTS=[["match","Best match"],["price","Cheapest"],["protein","Most protein"],["near","Nearest"]];
-const APPETITE={xs:["Very small",200],s:["Small",260],m:["Moderate",320]};
-const SPECIALS=[
- {v:"kombu",title:"Half bento + miso",when:"Weekdays 11:30–2:30",price:15,was:24},
- {v:"quince",title:"Mezze for one + mint tea",when:"Every day after 5 pm",price:17,was:29},
- {v:"brightwater",title:"Mini bowl with double protein",when:"All day",price:16,was:24},
- {v:"fennel",title:"GLP-1 tasting plate",when:"Tue–Thu dinner",price:26,was:null}
+
+const SPECIALS = [
+ {venue:"kombu-lane",title:"Half bento + miso",when:"Weekdays 11:30am – 2:30pm",price:15,was:24},
+ {venue:"little-quince",title:"Mezze for one + mint tea",when:"Every day after 5pm",price:17,was:29},
+ {venue:"brightwater-bowls",title:"Mini bowl with double protein",when:"All day",price:16,was:24},
+ {venue:"kettle-and-crane",title:"Four dumplings + small soup",when:"Lunch, Mon – Fri",price:14,was:20},
+ {venue:"marrow-and-moss",title:"Lighter brekkie + coffee",when:"Before 10am",price:15,was:22},
+ {venue:"fennel-and-fig",title:"Small-plates tasting for one",when:"Tue – Thu dinner",price:32,was:null}
+];
+
+// Photos (Unsplash, free licence). Generic dish photos by cuisine, not photos of these venues.
+const U = id => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=70`;
+const PHOTOS = {
+  "kombu-lane":"1554502078-ef0fc409efce", "little-quince":"1750874695064-f851719d1858", "pebble-bakehouse":"1671393071395-9999964a46cd",
+  "verdigris-taqueria":"1683062332605-4e1209d75346", "brightwater-bowls":"1674315526518-f8891c4a8b70", "hollow-oak-grill":"1600555379765-f82335a7b1b0",
+  "tamarind-room":"1504674900247-0877df9cc836", "fennel-and-fig":"1414235077428-338989a2e8c0", "saffron-and-salt":"1762922425226-8cfe6987e7b0",
+  "marrow-and-moss":"1755811248324-c70c1f10a7fd", "tiller-and-pine":"1711633648895-f5df0336ff55", "oro-pasta-bar":"1597393353365-9d4366392fe9",
+  "kettle-and-crane":"1741612552052-2c5806e8a9ea", "seawall-kitchen":"1515669097368-22e68427d265"
+};
+VENUES.forEach(v => { v.photo = U(PHOTOS[v.id]); v.example = true; });
+const SITE_PHOTOS = { hero: U("1579027989536-b7b1f875659b"), interior: U("1783447036642-90a65ff85a0f"), people: U("1466978913421-dad2ebd01d17"), skewers: U("1746564738966-bad354e75a88") };
+
+// Lists are built from the listings, so they fill themselves once real data arrives.
+const LISTS = [
+  { id:"half-serves-inner-north", title:"Where to get a proper half serve in the inner north", kicker:"Fitzroy · Collingwood · Carlton · Brunswick",
+    dek:"Places that will happily plate half, and charge you for half.", photo:SITE_PHOTOS.people,
+    pick: v => v.features.half && ["Fitzroy","Collingwood","Carlton","Brunswick"].includes(v.suburb) },
+  { id:"small-meals-under-15", title:"Small meals under $15 that still fill you up", kicker:"Cheap eats",
+    dek:"Lunch sizes, single tacos and dumplings by the four.", photo:SITE_PHOTOS.skewers,
+    pick: v => v.meals.some(m => m.price < 15) },
+  { id:"high-protein-small-plates", title:"High-protein small plates worth crossing town for", kicker:"30 g and up",
+    dek:"When you can only manage a few bites, make them count.", photo:SITE_PHOTOS.interior,
+    pick: v => v.meals.some(m => m.protein >= 30) }
 ];
